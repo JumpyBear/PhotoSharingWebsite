@@ -6,14 +6,14 @@ const initialState = {
     user: null
 }
 
-if(localStorage.getItem('token')) {
-    const codedToken = localStorage.getItem('token')
+if(window.localStorage.getItem('token')) {
+    const codedToken = window.localStorage.getItem('token')
     // decode the token
     const decodedToken = jwtDecode(codedToken)
 
     // if the token expired
     if(decodedToken.exp * 1000 < Date.now()) {
-        localStorage.removeItem('token')
+        window.localStorage.removeItem('token')
     } else {
         // valid token
         initialState.user = decodedToken
@@ -46,7 +46,7 @@ function authReducer(state, action) {
 function AuthProvider(props) {
     const [state, dispatch] = useReducer(authReducer, initialState)
     const login = (userData) => {
-        localStorage.setItem('token', userData.token)
+        window.localStorage.setItem('token', userData.token)
         dispatch({
             type: 'LOGIN',
             payload: userData
@@ -54,7 +54,7 @@ function AuthProvider(props) {
     }
 
     function logout() {
-        localStorage.removeItem('token')
+        window.localStorage.removeItem('token')
         dispatch({
             type: 'LOGOUT'
         })

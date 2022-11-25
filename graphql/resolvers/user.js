@@ -1,4 +1,5 @@
 const User = require('../../models/User')
+const { ApolloServer, gql, UserInputError} = require('apollo-server')
 const { ApolloError } = require('apollo-server-errors')
 // import bcrypt to encrypt password
 const bcrypt = require('bcryptjs')
@@ -6,13 +7,13 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
     Mutation: {
-        async registerUser(__, {registerInput: {username, email, password}}) {
+        async registerUser(_, {registerInput: {username, email, password}}) {
             // an old user exists with email and attempt to register
             const oldUser = await User.findOne({ email })
 
             if(oldUser) {
                 // Use apollo server error to throw error
-                throw new ApolloError(`The user is already exists with the email: ${email}`, 'USER_ALREADY_EXISTS')
+                throw new ApolloError('The user is already exists with the email:' + email, 'USER_ALREADY_EXISTS')
             }
 
             // Encrypt password (password, salt)
@@ -46,7 +47,7 @@ module.exports = {
                 ...res._doc
             }
         },
-        async loginUser(__, {loginInput: {email, password}}) {
+        async loginUser(_, {loginInput: {email, password}}) {
             // See if a user exists with the email
             const user = await User.findOne({ email })
 
@@ -74,6 +75,6 @@ module.exports = {
     },
     Query: {
         // message: (__, {ID}) => Message.findById(ID)
-        user: (__, {ID}) => User.findById(ID)
+        user: (_, {ID}) => User.findById(ID)
     }
 }

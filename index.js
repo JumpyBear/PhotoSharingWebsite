@@ -14,7 +14,8 @@ const MONGODB = "mongodb+srv://root:admin123@cluster0.fehsl2f.mongodb.net/?retry
 // server setup
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({req}) => ({req})
 })
 
 mongoose.connect(MONGODB, {useNewUrlParser: true})
