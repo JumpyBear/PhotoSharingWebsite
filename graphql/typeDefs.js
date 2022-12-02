@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server')
 
 module.exports = gql`
+    scalar Upload
+    
     type Message {
         text: String
         createdAt: String
@@ -12,6 +14,10 @@ module.exports = gql`
         email: String
         password: String
         token: String
+    }
+
+    type File {
+        url: String
     }
 
     input MessageInput {
@@ -33,11 +39,14 @@ module.exports = gql`
     type Query {
         message(id: ID!): Message
         user(id: ID!): User
+        uploads: [File]
+        hello: String
     }
 
     type Mutation {
         createMessage(messageInput: MessageInput): Message!
         registerUser(registerInput: RegisterInput): User
         loginUser(loginInput: LoginInput): User
+        singleUpload(file: Upload!): File!
     }
 `
