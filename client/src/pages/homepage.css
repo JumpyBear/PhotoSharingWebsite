@@ -1,0 +1,17 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.image-preview {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 20px;
+}
+
+.image-preview img {
+    width: 370px;
+    height: 370px;
+    object-fit: cover;
+}
