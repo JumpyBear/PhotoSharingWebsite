@@ -6,7 +6,7 @@ import { useState } from 'react'
 import './homepage.css'
 import BackupIcon from '@mui/icons-material/Backup'
 import PublishIcon from '@mui/icons-material/Publish';
-import { Button, Link } from '@mui/material'
+import { Button, Link, Alert, AlertTitle } from '@mui/material'
 import Like from '../components/like'
 
 // import Axios from 'axios'
@@ -71,14 +71,17 @@ function Homepage() {
                                         <img src={image.url} alt="UploadImg" />
                                         {/* like button */}
                                         <Like />
-                                    </div> 
+                                    </div>
                                 </>
                             ))}
                         </div>
                     </>
                     :
                     <>
-                        <h2 style={{ textAlign: 'center', color: 'red' }}>Uh...You are not logged in, please login or create an account first!</h2>
+                        <Alert severity="warning">
+                            <AlertTitle>Warning</AlertTitle>
+                            <h2 style={{ textAlign: 'center', color: 'red' }}>Uh...You are not logged in, please login or create an account first!</h2>
+                        </Alert>
                         <h3 style={{ textAlign: 'center', color: 'blue' }}>
                             <Link href='/register'>{'Create account here'}</Link>
                             <br />
@@ -86,7 +89,6 @@ function Homepage() {
                         </h3>
                     </>
             }
-
         </div>
     )
 }
